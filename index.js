@@ -32,7 +32,7 @@ io.on ('connection', function (socket) {
       });
 
       user [r_data ['user'], 'socketId'] = socket.id;
-      user [r_data ['user'], 'name'] = r_data ['user'];
+      user [r_data ['user'], 'user'] = r_data ['user'];
       user [r_data ['user'], 'cha'] = r_data ['cha'];
       user [r_data ['user'], 'room'] = r_data ['room'];
       user [r_data ['user'], 'pos'] = r_data ['pos'];
