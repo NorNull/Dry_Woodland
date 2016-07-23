@@ -3,7 +3,14 @@ var app = express ();
 var http = require ('http').createServer (app);
 var io = require ('socket.io')(http);
 
+io.set('transports', [
+    'websocket'
+  , 'xhr-polling'
+  ]);
+
 app.set ('port', process.env.PORT || 3000);
+
+app.use (express.static (__dirname + '/'));
 
 app.get ('/', getRoot);
 
@@ -31,7 +38,7 @@ io.on ('connection', function (socket) {
       user [r_data ['user'], 'rot'] = r_data ['rot'];
 
       socket.join (r_data ['room']);
-      socket.in (r_data ['room']).emit ('Born', r_data);
+      socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
   });
 
   socket.on ('AI_Born', function (r_data) {
