@@ -31,7 +31,7 @@ io.on ('connection', function (socket) {
       user [r_data ['user'], 'rot'] = r_data ['rot'];
 
       socket.join (r_data ['room']);
-      socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
+      socket.in (r_data ['room']).emit ('Born', r_data);
   });
 
   socket.on ('AI_Born', function (r_data) {
