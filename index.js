@@ -37,6 +37,7 @@ io.on ('connection', function (socket) {
           socket.emit ('Born', data);
         }
       }
+      
       socket.join (r_data ['room']);
       socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
   });
