@@ -29,6 +29,14 @@ io.on ('connection', function (socket) {
       user [r_data ['user'], 'pos'] = r_data ['pos'];
       user [r_data ['user'], 'rot'] = r_data ['rot'];
 
+      for (var index = 0; index < user.length; index++) {
+        if (user [index, 'room'] == r_data ['room'] && user [index, 'user'] != r_data ['user']) {
+          var data = {user : user [index, 'user'], cha : user [index, 'cha'],
+                      pos : user [index, 'pos'], rot : user [index, 'rot']};
+
+          socket.emit ('Born', data);
+        }
+      }
       socket.join (r_data ['room']);
       socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
   });
