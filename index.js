@@ -17,27 +17,28 @@ app.get ('/', getRoot);
 function getRoot (req, res) {
   res.send ("Server is running");
 }
-var user = [,];
+var user = [];
 var ai_room = [];
 
 io.on ('connection', function (socket) {
   socket.on ('Born', function (r_data) {
-      user [r_data ['user'], 'socketId'] = socket.id;
-      user [r_data ['user'], 'user'] = r_data ['user'];
-      user [r_data ['user'], 'cha'] = r_data ['cha'];
-      user [r_data ['user'], 'room'] = r_data ['room'];
-      user [r_data ['user'], 'pos'] = r_data ['pos'];
-      user [r_data ['user'], 'rot'] = r_data ['rot'];
 
-      for (var index = 0; index < user.length; index++) {
-        if (user [index, 'room'] == r_data ['room'] && user [index, 'user'] != r_data ['user']) {
-          var data = {user : user [index, 'user'], cha : user [index, 'cha'],
-                      pos : user [index, 'pos'], rot : user [index, 'rot']};
+      var pk_data = {user : r_data ['user'], socketId : socket.id, room : r_data ['room'],
+                     cha : r_data ['cha'], pos : r_data ['pos'], rot : r_data ['rot']};
+
+      user.push (pk_data);
+
+      user.forEach (function (item, index, array) {
+        console.log (item ['user']);
+
+        if (item ['room'] == r_data ['room'] && item ['user'] != r_data ['user']) {
+          var data = {user : item ['user'], cha : item ['cha'],
+                      pos : item ['pos'], rot : item ['rot']};
 
           socket.emit ('Born', data);
         }
-      }
-      
+      });
+
       socket.join (r_data ['room']);
       socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
   });
@@ -48,7 +49,16 @@ io.on ('connection', function (socket) {
   });
 
   socket.on ('MoveMent', function (r_data) {
-    socket.in (user [r_data ['user'], 'room']).emit ('MoveMent', r_data);
+    var room = null;
+
+    user.forEach (function (item, index, array) {
+      if (item ['user'] == r_data ['user']) {
+        room = item ['room'];
+        return;
+      }
+    });
+
+    socket.broadcast.to (room).emit ('MoveMent', r_data);
   });
 });
 
