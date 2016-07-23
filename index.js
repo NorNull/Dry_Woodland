@@ -15,12 +15,16 @@ app.use (express.static (__dirname + '/'));
 app.get ('/', getRoot);
 
 function getRoot (req, res) {
-  res.send ("Server is running : " + http.address ().address + http.address ().port);
+  res.send ("Server is running");
 }
 var user = [,]
 var ai_room = [];
 
 io.on ('connection', function (socket) {
+
+  var dt = {message : 'OK'}
+  socket.emit ('test', dt);
+
   socket.on ('Born', function (r_data) {
       user.forEach(function (index) {
         if (user [index] ['room'] == r_data ['room']) {
@@ -38,7 +42,7 @@ io.on ('connection', function (socket) {
       user [r_data ['user'], 'rot'] = r_data ['rot'];
 
       socket.join (r_data ['room']);
-      socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
+      socket.in (r_data ['room']).emit ('Born', r_data);
   });
 
   socket.on ('AI_Born', function (r_data) {
@@ -47,7 +51,7 @@ io.on ('connection', function (socket) {
   });
 
   socket.on ('MoveMent', function (r_data) {
-    socket.in (user [r_data ['user'], 'room']).broadcast.emit ('MoveMent', r_data);
+    socket.in (user [r_data ['user'], 'room']).emit ('MoveMent', r_data);
   });
 });
 
