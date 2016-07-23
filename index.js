@@ -5,10 +5,6 @@ var io = require ('socket.io')(http);
 
 app.set ('port', process.env.PORT || 3000);
 
-server.listen (app.get ('port'), function () {
-  console.log ("Server is running");
-});
-
 var user = [,]
 var ai_room = [];
 
@@ -41,4 +37,8 @@ io.on ('connection', function (socket) {
   socket.on ('MoveMent', function (r_data) {
     socket.in (user [r_data ['user'], 'room']).broadcast.emit ('MoveMent', r_data);
   });
+});
+
+http.listen (app.get ('port'), function () {
+  console.log ("Server is running");
 });
