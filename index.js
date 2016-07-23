@@ -22,6 +22,8 @@ var ai_room = [];
 
 io.on ('connection', function (socket) {
   socket.on ('Born', function (r_data) {
+      console.log ('test');
+
       for (var index = 0; index < user.length; index++) {
         if (user [index, 'room'] == r_data ['room']) {
           var data = {user : user [index, 'user'], cha : user [index, 'cha'],
