@@ -8,7 +8,7 @@ app.set ('port', process.env.PORT || 3000);
 app.get ('/', getRoot);
 
 function getRoot (req, res) {
-  res.send ("Server is running : " + server.address ().address + server.address ().port);
+  res.send ("Server is running : " + http.address ().address + http.address ().port);
 }
 var user = [,]
 var ai_room = [];
