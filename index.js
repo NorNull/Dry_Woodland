@@ -21,10 +21,6 @@ var user = [,]
 var ai_room = [];
 
 io.on ('connection', function (socket) {
-
-  var dt = {message : 'OK'}
-  socket.emit ('test', dt);
-
   socket.on ('Born', function (r_data) {
       user.forEach(function (index) {
         if (user [index] ['room'] == r_data ['room']) {
