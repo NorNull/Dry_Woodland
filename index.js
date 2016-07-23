@@ -38,10 +38,8 @@ io.on ('connection', function (socket) {
       user [r_data ['user'], 'pos'] = r_data ['pos'];
       user [r_data ['user'], 'rot'] = r_data ['rot'];
 
-      console.log (user [0, 'user']);
-
       socket.join (r_data ['room']);
-      socket.in (r_data ['room']).emit ('Born', r_data);
+      socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
   });
 
   socket.on ('AI_Born', function (r_data) {
