@@ -13,7 +13,7 @@ var user = [,]
 var ai_room = [];
 
 io.on ('connection', function (socket) {
-  io.on ('Born', function (r_data) {
+  socket.on ('Born', function (r_data) {
       user.forEach(function (index) {
         if (user [index] ['room'] == r_data ['room']) {
           var data = {user : user [index], cha : user [index] ['cha'],
@@ -33,12 +33,12 @@ io.on ('connection', function (socket) {
       socket.in (r_data ['room']).broadcast.emit ('Born', r_data);
   });
 
-  io.on ('AI_Born', function (r_data) {
+  socket.on ('AI_Born', function (r_data) {
     ai_room [r_data ['room']] = socket.id;
     socket.join (r_data ['room'])
   });
 
-  io.on ('MoveMent', function (r_data) {
+  socket.on ('MoveMent', function (r_data) {
     socket.in (user [r_data ['user'], 'room']).broadcast.emit ('MoveMent', r_data);
   });
 });
