@@ -24,7 +24,7 @@ io.on ('connection', function (socket) {
   socket.on ('Born', function (r_data) {
       user.forEach(function (index) {
         if (user [index, 'room'] == r_data ['room']) {
-          var data = {user : user [index], cha : user [index, 'cha'],
+          var data = {user : user [index, 'user'], cha : user [index, 'cha'],
                       pos : user [index, 'pos'], pos : user [index, 'rot']};
 
           socket.emit ('Born', data);
@@ -32,6 +32,7 @@ io.on ('connection', function (socket) {
       });
 
       user [r_data ['user'], 'socketId'] = socket.id;
+      user [r_data ['user'], 'name'] = r_data ['user'];
       user [r_data ['user'], 'cha'] = r_data ['cha'];
       user [r_data ['user'], 'room'] = r_data ['room'];
       user [r_data ['user'], 'pos'] = r_data ['pos'];
