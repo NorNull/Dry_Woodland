@@ -5,6 +5,11 @@ var io = require ('socket.io')(http);
 
 app.set ('port', process.env.PORT || 3000);
 
+app.get ('/', getRoot);
+
+function getRoot (req, res) {
+  res.send ("Server is running : " + server.address ().address + server.address ().port);
+}
 var user = [,]
 var ai_room = [];
 
