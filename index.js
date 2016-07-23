@@ -17,19 +17,19 @@ app.get ('/', getRoot);
 function getRoot (req, res) {
   res.send ("Server is running");
 }
-var user = [,]
+var user = [,];
 var ai_room = [];
 
 io.on ('connection', function (socket) {
   socket.on ('Born', function (r_data) {
-      user.forEach(function (index) {
-        if (user [index] ['room'] != r_data ['room']) {
-          var data = {user : user [index] ['user'], cha : user [index] ['cha'],
-                      pos : user [index] ['pos'], pos : user [index] ['rot']};
+      for (var index = 0; index < user.length; index++) {
+        if (user [index, 'room'] == r_data ['room']) {
+          var data = {user : user [index, 'user'], cha : user [index, 'cha'],
+                      pos : user [index, 'pos'], pos : user [index, 'rot']};
 
           socket.emit ('Born', data);
         }
-      });
+      }
 
       user [r_data ['user'], 'socketId'] = socket.id;
       user [r_data ['user'], 'user'] = r_data ['user'];
@@ -37,6 +37,8 @@ io.on ('connection', function (socket) {
       user [r_data ['user'], 'room'] = r_data ['room'];
       user [r_data ['user'], 'pos'] = r_data ['pos'];
       user [r_data ['user'], 'rot'] = r_data ['rot'];
+
+      console.log (user [0, 'user']);
 
       socket.join (r_data ['room']);
       socket.in (r_data ['room']).emit ('Born', r_data);
