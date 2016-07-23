@@ -25,7 +25,7 @@ io.on ('connection', function (socket) {
       for (var index = 0; index < user.length; index++) {
         if (user [index, 'room'] == r_data ['room']) {
           var data = {user : user [index, 'user'], cha : user [index, 'cha'],
-                      pos : user [index, 'pos'], pos : user [index, 'rot']};
+                      pos : user [index, 'pos'], rot : user [index, 'rot']};
 
           socket.emit ('Born', data);
         }
