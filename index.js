@@ -23,7 +23,7 @@ var ai_room = [];
 io.on ('connection', function (socket) {
   socket.on ('Born', function (r_data) {
       for (var index = 0; index < user.length; index++) {
-        if (user [index, 'room'] == r_data ['room']) {
+        if (user [index, 'room'] == r_data ['room'] && user [index, 'user'] != r_data ['user']) {
           var data = {user : user [index, 'user'], cha : user [index, 'cha'],
                       pos : user [index, 'pos'], rot : user [index, 'rot']};
 
